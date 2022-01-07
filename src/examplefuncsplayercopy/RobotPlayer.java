@@ -72,7 +72,7 @@ public strictfp class RobotPlayer {
                     case ARCHON:     ArchonStrategy.runArchon(rc);  break;
                     case MINER:      MinerStrategy.runMiner(rc);   break;
                     case SOLDIER:    runSoldier(rc); break;
-                    case LABORATORY: // Examplefuncsplayer doesn't use any of these robot types below.
+                    case LABORATORY: LaboratoryStrategy.runLaboratory(rc); break;
                     case WATCHTOWER: WatchTowerStrategy.runWatchTower(rc); break;
                     case BUILDER:    BuilderStrategy.runBuilder(rc); break;
                     case SAGE:       break;
