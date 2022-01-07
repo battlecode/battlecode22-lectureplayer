@@ -19,9 +19,9 @@ public class ArchonStrategy {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
         } else if (builders < 1){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
-        } else if (miners < soldiers / 2 && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
+        } else if (miners < soldiers * 4/3 && rc.getTeamLeadAmount(rc.getTeam()) < 5000){
             buildTowardsLowRubble(rc, RobotType.MINER);
-        } else if (builders < soldiers / 10){
+        } else if (builders < soldiers / 30){
             buildTowardsLowRubble(rc, RobotType.BUILDER);
         } else {
             buildTowardsLowRubble(rc, RobotType.SOLDIER);
