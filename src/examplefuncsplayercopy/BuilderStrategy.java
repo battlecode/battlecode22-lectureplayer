@@ -46,7 +46,7 @@ strictfp class BuilderStrategy {
             System.out.println("I moved!");
         }
 
-        if(rc.getTeamLeadAmount(rc.getTeam()) > 10000 && turn % 150 == 0 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
+        if(rc.getTeamLeadAmount(rc.getTeam()) > 5000 && turn % 30 == 0 && rc.canBuildRobot(RobotType.LABORATORY, dir)){
             rc.buildRobot(RobotType.LABORATORY, dir);
         } else if(rc.getTeamLeadAmount(rc.getTeam()) > 7000 && turn % 100 == 0 && rc.canBuildRobot(RobotType.WATCHTOWER, dir)){
             rc.buildRobot(RobotType.WATCHTOWER, dir);
