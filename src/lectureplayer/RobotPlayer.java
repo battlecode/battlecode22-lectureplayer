@@ -1,4 +1,4 @@
-package examplefuncsplayercopy;
+package lectureplayer;
 
 import battlecode.common.*;
 import java.util.Random;

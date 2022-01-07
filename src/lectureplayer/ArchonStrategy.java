@@ -1,4 +1,4 @@
-package examplefuncsplayercopy;
+package lectureplayer;
 
 import java.util.Arrays;
 
