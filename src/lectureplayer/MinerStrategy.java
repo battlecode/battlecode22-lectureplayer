@@ -54,11 +54,7 @@ strictfp class MinerStrategy {
 
         // We have a target location! Let's move towards it.
         if (targetLocation != null) {
-          // Don't use MapLocation.directionTo(targetLocation) !
-          Direction toMove = me.directionTo(targetLocation);
-          if (rc.canMove(toMove)) {
-            rc.move(toMove);
-          }
+          Pathing.walkTowards(rc, targetLocation);
         } else {
           if(rc.canMove(exploreDir)){
             rc.move(exploreDir);

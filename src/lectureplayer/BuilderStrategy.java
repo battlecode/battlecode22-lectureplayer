@@ -24,23 +24,22 @@ strictfp class BuilderStrategy {
 
         RobotInfo[] robots = rc.senseNearbyRobots();
         int distance = Integer.MAX_VALUE;
-        Direction dir = null;
+        MapLocation targetLocation = null;
         for(RobotInfo robot : robots){
             if(robot.getTeam().equals(rc.getTeam()) && robot.type.isBuilding()  &&robot.health < robot.type.getMaxHealth(robot.level)){
                 if(rc.getLocation().distanceSquaredTo(robot.location) < distance){
-                    dir = rc.getLocation().directionTo(robot.getLocation());
+                    targetLocation = robot.getLocation();
                     distance = rc.getLocation().distanceSquaredTo(robot.location);
                 }
-                
             }
         }
 
-        if(dir != null && rc.canMove(dir)){
-            rc.move(dir);
+        if (targetLocation != null) {
+            Pathing.walkTowards(rc, targetLocation);
         }
-        
+
         int directionIndex = RobotPlayer.rng.nextInt(RobotPlayer.directions.length);
-        dir = RobotPlayer.directions[directionIndex];
+        Direction dir = RobotPlayer.directions[directionIndex];
         if (rc.canMove(dir)) {
             rc.move(dir);
             System.out.println("I moved!");
