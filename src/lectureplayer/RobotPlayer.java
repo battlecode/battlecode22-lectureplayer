@@ -1,6 +1,7 @@
 package lectureplayer;
 
 import battlecode.common.*;
+
 import java.util.Random;
 
 /**
@@ -37,6 +38,8 @@ public strictfp class RobotPlayer {
         Direction.NORTHWEST,
     };
 
+    static RobotInfo[] nearbyEnemies = null;
+
     /**
      * run() is the method that is called when a robot is instantiated in the Battlecode world.
      * It is like the main function for your robot. If this method returns, the robot dies!
@@ -54,6 +57,14 @@ public strictfp class RobotPlayer {
         // You can also use indicators to save debug notes in replays.
         rc.setIndicatorString("Hello world!");
 
+        if (rc.getType() == RobotType.ARCHON) {
+            final int x = rc.getLocation().x, y = rc.getLocation().y;
+            //assume enemies at reflection locations
+            Communication.reportEnemy(rc, new MapLocation(x, rc.getMapHeight() - y - 1));
+            Communication.reportEnemy(rc, new MapLocation(rc.getMapWidth() - x - 1, y));
+            Communication.reportEnemy(rc, new MapLocation(rc.getMapWidth() - x - 1, rc.getMapHeight() - y - 1));
+        }
+
         while (true) {
             // This code runs during the entire lifespan of the robot, which is why it is in an infinite
             // loop. If we ever leave this loop and return from run(), the robot dies! At the end of the
@@ -61,6 +72,16 @@ public strictfp class RobotPlayer {
 
             turnCount += 1;  // We have now been alive for one more turn!
             System.out.println("Age: " + turnCount + "; Location: " + rc.getLocation());
+
+            Communication.reportAlive(rc); // report that we are alive!
+            Communication.clearObsoleteEnemies(rc); //remove outdated enemy locations
+
+            RobotInfo[] nearbyEnemies = rc.senseNearbyRobots(-1, rc.getTeam().opponent());
+            for (RobotInfo r: nearbyEnemies) {
+                Communication.reportEnemy(rc, r.location);
+            }
+
+            rc.setIndicatorString(Integer.toString(Communication.getAlive(rc, rc.getType())));
 
             // Try/catch blocks stop unhandled exceptions, which cause your robot to explode.
             try {
@@ -114,6 +135,11 @@ public strictfp class RobotPlayer {
             MapLocation toAttack = enemies[0].location;
             if (rc.canAttack(toAttack)) {
                 rc.attack(toAttack);
+            }
+        } else {
+            Direction dir = rc.getLocation().directionTo(Communication.getClosestEnemy(rc));
+            if(dir != null && rc.canMove(dir)){
+                rc.move(dir);
             }
         }
 

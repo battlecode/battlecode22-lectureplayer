@@ -15,7 +15,7 @@ strictfp class MinerStrategy {
           RobotPlayer.rng.setSeed(rc.getID());
           exploreDir = RobotPlayer.directions[RobotPlayer.rng.nextInt(RobotPlayer.directions.length)];
         }
-        rc.setIndicatorString(exploreDir.toString());
+        //rc.setIndicatorString(exploreDir.toString());
 
         // Try to mine on squares around us.
         MapLocation me = rc.getLocation();
